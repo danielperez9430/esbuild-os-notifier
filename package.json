@@ -1,0 +1,24 @@
+{
+  "name": "esbuild-os-notifier",
+  "version": "1.0.0",
+  "description": "Esbuild OS Notification Plugin",
+  "main": "dist/index.js",
+  "repository": "https://danielperez9430@github.com/danielperez9430/esbuild-os-notifier.git",
+  "author": "danielperez9430",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc",
+    "postbuild": "cp -r ./src/assets ./dist"
+  },
+  "dependencies": {
+    "node-notifier": "^10.0.1",
+    "deepmerge": "^4.2.2",
+    "esbuild": "^0.15.9"
+  },
+  "devDependencies": {
+    "@types/node-notifier": "^8.0.2",
+    "typescript": "^4.8.3"
+  }
+}
