@@ -1,5 +1,5 @@
 import notifier from 'node-notifier'
-import { omit, get } from "./utils/utils"
+import { omit, get } from "./utils/utils.js"
 import deepmerge from 'deepmerge'
 
 import type NotificationCenter from 'node-notifier'
