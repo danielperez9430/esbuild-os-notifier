@@ -1,6 +1,6 @@
 {
   "name": "esbuild-os-notifier",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Esbuild OS Notification Plugin",
   "main": "dist/index.js",
   "repository": "https://danielperez9430@github.com/danielperez9430/esbuild-os-notifier.git",

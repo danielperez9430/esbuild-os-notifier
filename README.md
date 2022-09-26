@@ -35,9 +35,19 @@ esbuild.build({
 You can add your own custom configuration of options to esbuildOsNotifier
 
 ```js
-esbuild-os-notifier({
-  // node_notifier options
-}, {
+esbuildOsNotifier({
+    // Options from "node_notifier"
+    contentImage: '' // Path to png image (Recomend 300x300px) for display in the notification
+    sound: true, // Only Notification Center or Windows Toasters (true/false)
+    timeout: 5000, // Time (in milliseconds) to clear the notifications
+  }, 
+  {
     // Show or disable notifications for error, warnings or sucess
-});
+    warnings: false,
+    errors: true,
+    success: true
+  });
 ```
+
+
+
