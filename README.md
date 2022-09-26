@@ -35,7 +35,7 @@ esbuild.build({
 You can add your own custom configuration of options to esbuildOsNotifier
 
 ```js
-markdownPlugin({
+esbuild-os-notifier({
   // node_notifier options
 }, {
     // Show or disable notifications for error, warnings or sucess
