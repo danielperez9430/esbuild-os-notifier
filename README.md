@@ -18,8 +18,24 @@ or
 Add it to your esbuild plugins list:
 
 ```js
+// ESM example with import
 import { build } from 'esbuild'
 import esbuildOsNotifier from 'esbuild-os-notifier'
+
+build({
+  ...
+  plugins: [
+    esbuildOsNotifier()
+  ]
+  ...
+});
+
+```
+
+```js
+// CommonJs example with require
+const esbuild = require("esbuild");
+const esbuildOsNotifier = require('esbuild-os-notifier')
 
 esbuild.build({
   ...
@@ -28,7 +44,6 @@ esbuild.build({
   ]
   ...
 });
-
 ```
 
 ## Options
@@ -48,6 +63,7 @@ esbuildOsNotifier({
     success: true
   });
 ```
+
 
 
 
