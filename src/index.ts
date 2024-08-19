@@ -30,10 +30,6 @@ export default function esbuildOsNotifier(notificationOptions: NotificationCente
                 sucess: true,
             }, show)
 
-            if (!build.initialOptions.watch) {
-                return false
-            }
-
             let start = 0
 
             build.onStart(() => {
