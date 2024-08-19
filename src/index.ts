@@ -24,11 +24,11 @@ export default function esbuildOsNotifier(notificationOptions: NotificationCente
         name: 'esbuild-build-os-notifications',
         setup(build: PluginBuild) {
 
-            const display = deepmerge({
+            const display: ShowOptions = deepmerge({
                 warnings: true,
                 errors: true,
-                sucess: true,
-            }, show)
+                success: true,
+            } satisfies ShowOptions, show)
 
             let start = 0
 
@@ -67,7 +67,7 @@ export default function esbuildOsNotifier(notificationOptions: NotificationCente
                     })
                 }
 
-                if ((!errors || errors?.length === 0) && display.sucess) {
+                if ((!errors || errors?.length === 0) && display.success) {
                     sendMessage("✅ Build successfull!", deepmerge({
                         title: 'Esbuild',
                         timeout: 5
