@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielperez9430/esbuild-os-notifier"
+    "url": "git+https://github.com/danielperez9430/esbuild-os-notifier.git"
   },
   "author": "danielperez9430",
   "license": "MIT",
