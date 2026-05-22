@@ -42,7 +42,7 @@ export default function esbuildOsNotifier(notificationOptions: NotificationCente
 
 
                 if (errors && errors.length > 0 && display.errors) {
-                    const message = `Build failed with ${errors.length} errors and ${warnings.length} warnings\nBuild in ${totalBuildTime}ms`
+                    const message = `Build failed with ${errors.length} errors and ${warnings?.length ?? 0} warnings\nBuild in ${totalBuildTime}ms`
 
                     sendMessage(message, deepmerge({
                         title: 'Esbuild - Info'
@@ -67,8 +67,8 @@ export default function esbuildOsNotifier(notificationOptions: NotificationCente
                     })
                 }
 
-                if ((!errors || errors?.length === 0) && display.success) {
-                    sendMessage("✅ Build successfull!", deepmerge({
+                if ((!errors || errors.length === 0) && display.success) {
+                    sendMessage("✅ Build successful!", deepmerge({
                         title: 'Esbuild',
                         timeout: 5
                     }, notificationOptions))

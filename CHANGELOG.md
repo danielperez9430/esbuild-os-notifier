@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.3] - 2026-05-22
+
+### Changed
+- Hardened CI security: pinned actions to commit SHAs, added tag-on-main verification, enabled npm provenance, blocked fork-triggered releases
+- Added `npm run build` step to the publish workflow
+- Bumped `tsconfig.json` module target from `ES2020` to `ES2022` to match `import.meta.url` usage
+- Removed overly broad `*.txt` pattern from `.gitignore`
+
+### Fixed
+- Typo in success notification message (`successfull` → `successful`)
+- Potential `undefined` access when reading `warnings.length` in the error summary
+- Dead nullish check in the success display condition
+
 ## [1.1.2] - 2026-05-22
 
 ### Changed
