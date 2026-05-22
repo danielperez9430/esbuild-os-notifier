@@ -1,23 +1,23 @@
+import { fileURLToPath } from 'url'
 import notifier from 'node-notifier'
-import { omit, get } from "./utils/utils.js"
+import { omit, get } from './utils/utils.js'
 import deepmerge from 'deepmerge'
 import path from 'path'
 
 import type NotificationCenter from 'node-notifier'
 import type { BuildResult, PluginBuild, Message } from 'esbuild'
 
-export declare type ShowOptions = {
-    warnings?: boolean,
-    errors?: boolean,
+export type ShowOptions = {
+    warnings?: boolean
+    errors?: boolean
     success?: boolean
 }
 
-if (!global.__dirname) {
-    global.__dirname = path.resolve(path.dirname(''))
-}
-
-const DEFAULT_ICON_PATH = path.resolve(__dirname, 'assets');
-const logo = path.join(DEFAULT_ICON_PATH, 'esbuild_logo.png');
+const logo = path.join(
+    path.dirname(fileURLToPath(import.meta.url)),
+    'assets',
+    'esbuild_logo.png'
+)
 
 export default function esbuildOsNotifier(notificationOptions: NotificationCenter.Notification = {}, show: ShowOptions = {}) {
     return {

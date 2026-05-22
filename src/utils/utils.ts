@@ -1,16 +1,13 @@
-export const omit = (obj: Object, keys: Array<string>): Object =>
+export const omit = (obj: object, keys: string[]): Record<string, unknown> =>
     Object.fromEntries(
         Object.entries(obj)
             .filter(([k]) => !keys.includes(k))
     )
 
-export const get = (value: any, path: string, defaultValue: any) => {
-    return String(path).split('.').reduce((acc, v) => {
-        try {
-            acc = acc[v] || defaultValue
-        } catch (e) {
-            return defaultValue
+export const get = (value: unknown, path: string, defaultValue?: unknown): unknown =>
+    path.split('.').reduce((acc: unknown, v: string) => {
+        if (acc && typeof acc === 'object' && v in acc) {
+            return (acc as Record<string, unknown>)[v]
         }
-        return acc
+        return defaultValue
     }, value)
-} 
