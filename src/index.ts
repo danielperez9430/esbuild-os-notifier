@@ -1,11 +1,18 @@
 import { fileURLToPath } from 'url'
 import notifier from 'node-notifier'
 import { omit, get } from './utils/utils.js'
-import deepmerge from 'deepmerge'
 import path from 'path'
 
-import type NotificationCenter from 'node-notifier'
+import type NotificationCenter from 'node-notifier/notifiers/notificationcenter'
+import type NotifySend from 'node-notifier/notifiers/notifysend'
+import type WindowsToaster from 'node-notifier/notifiers/toaster'
 import type { BuildResult, PluginBuild, Message } from 'esbuild'
+
+// What node-notifier accepts on macOS, Linux and Windows, so the options the
+// README shows (contentImage, sound, timeout) type-check.
+export type NotificationOptions = NotificationCenter.Notification &
+    NotifySend.Notification &
+    WindowsToaster.Notification & { appId?: string }
 
 export type ShowOptions = {
     warnings?: boolean
@@ -19,16 +26,17 @@ const logo = path.join(
     'esbuild_logo.png'
 )
 
-export default function esbuildOsNotifier(notificationOptions: NotificationCenter.Notification = {}, show: ShowOptions = {}) {
+export default function esbuildOsNotifier(notificationOptions: NotificationOptions = {}, show: ShowOptions = {}) {
     return {
         name: 'esbuild-build-os-notifications',
         setup(build: PluginBuild) {
 
-            const display: ShowOptions = deepmerge({
+            const display: ShowOptions = {
                 warnings: true,
                 errors: true,
                 success: true,
-            } satisfies ShowOptions, show)
+                ...show,
+            }
 
             let start = 0
 
@@ -44,16 +52,18 @@ export default function esbuildOsNotifier(notificationOptions: NotificationCente
                 if (errors && errors.length > 0 && display.errors) {
                     const message = `Build failed with ${errors.length} errors and ${warnings?.length ?? 0} warnings\nBuild in ${totalBuildTime}ms`
 
-                    sendMessage(message, deepmerge({
-                        title: 'Esbuild - Info'
-                    }, omit(notificationOptions, ['message', 'title'])))
+                    sendMessage(message, {
+                        title: 'Esbuild - Info',
+                        ...omit(notificationOptions, ['message', 'title']),
+                    })
 
                     errors.forEach((error) => {
                         const message = parseBuildMessage(error)
 
-                        sendMessage(message, deepmerge({
-                            title: 'Esbuild - Error'
-                        }, omit(notificationOptions, ['message', 'title'])))
+                        sendMessage(message, {
+                            title: 'Esbuild - Error',
+                            ...omit(notificationOptions, ['message', 'title']),
+                        })
                     })
                 }
 
@@ -61,17 +71,19 @@ export default function esbuildOsNotifier(notificationOptions: NotificationCente
                     warnings.forEach((warning) => {
                         const message = parseBuildMessage(warning)
 
-                        sendMessage(message, deepmerge({
+                        sendMessage(message, {
                             title: 'Esbuild - Warning',
-                        }, omit(notificationOptions, ['message', 'title'])))
+                            ...omit(notificationOptions, ['message', 'title']),
+                        })
                     })
                 }
 
                 if ((!errors || errors.length === 0) && display.success) {
-                    sendMessage("✅ Build successful!", deepmerge({
+                    sendMessage("✅ Build successful!", {
                         title: 'Esbuild',
-                        timeout: 5
-                    }, notificationOptions))
+                        timeout: 5,
+                        ...notificationOptions,
+                    })
                 }
             })
         }
@@ -86,12 +98,13 @@ function parseBuildMessage(msg: Message) {
     return message
 }
 
-function sendMessage(message: string, options: NotificationCenter.Notification) {
-    notifier.notify(deepmerge({
+function sendMessage(message: string, options: NotificationOptions) {
+    notifier.notify({
         appId: 'esbuild-os-notifier',
         title: 'Esbuild',
         message,
         hint: process.platform === 'linux' ? 'int:transient:1' : undefined,
         contentImage: logo,
-    }, options));
+        ...options,
+    });
 }

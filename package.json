@@ -26,7 +26,6 @@
     "postbuild": "cp -r ./src/assets ./dist"
   },
   "dependencies": {
-    "deepmerge": "^4.3.1",
     "esbuild": "^0.28.0",
     "node-notifier": "^10.0.1"
   },
