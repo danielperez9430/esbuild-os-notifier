@@ -6,11 +6,13 @@ on:
       - 'v*'
 
 permissions:
-  id-token: write   # Required for OIDC authentication
-  contents: write   # Required for creating GitHub Release
+  contents: read
 
 jobs:
   release:
+    permissions:
+      id-token: write   # Required for OIDC authentication
+      contents: write   # Required for creating GitHub Release
     if: >-
       github.event_name == 'push' &&
       startsWith(github.ref, 'refs/tags/v') &&
@@ -21,6 +23,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6.4.0
@@ -28,13 +31,15 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
+      # The ref comes in through env, not ${{ }}: a tag name can hold shell
+      # syntax, and an expression is pasted into the script before it runs.
       - name: Verify tag is on main
         run: |
           git fetch origin main
-          git branch -r --contains ${{ github.ref }} | grep -q origin/main
+          git branch -r --contains "$GITHUB_REF" | grep -q origin/main
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build
         run: npm run build
@@ -46,3 +51,20 @@ jobs:
         uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65  # v2.6.2
         with:
           generate_release_notes: true
+
+  announce:
+    needs: release
+    permissions:
+      contents: read
+    uses: Pepebits/release-announce/.github/workflows/announce.yml@v1
+    with:
+      tag: ${{ github.ref_name }}
+      notes_source: changelog
+      install_title: 📦 npm
+      install_command: npm i -D esbuild-os-notifier@{version}
+      buttons: >-
+        [{"text": "📝 Changelog", "url": "{repo_url}/blob/{tag}/CHANGELOG.md"},
+         {"text": "📦 npm", "url": "https://www.npmjs.com/package/esbuild-os-notifier/v/{version}"}]
+    secrets:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
