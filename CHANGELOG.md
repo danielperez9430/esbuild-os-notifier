@@ -1,5 +1,19 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- README banner and logo (`docs/`)
+- Releases are announced on Telegram through [release-announce](https://github.com/Pepebits/release-announce)
+- Dependabot keeps npm dependencies and GitHub Actions up to date, monthly
+
+### Changed
+- `deepmerge` is no longer a dependency: the options are flat objects, merged with spread. It carried an unpatched advisory ([GHSA-gcqx-w48m-w2h4](https://github.com/advisories/GHSA-gcqx-w48m-w2h4)) and was bundled into `dist`
+- The options parameter is typed with what node-notifier accepts on macOS, Linux and Windows, so `contentImage`, `sound` and `timeout` type-check
+
+### Security
+- The release workflow reads the tag from the environment instead of interpolating it into the script, installs without lifecycle scripts, does not persist the checkout token, and grants write permissions only to the job that publishes
+
 ## [1.1.3] - 2026-05-22
 
 ### Changed
