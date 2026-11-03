@@ -1,4 +1,4 @@
-# esbuild-os-notifier
+<p align="center"><img src="docs/banner.png" alt="esbuild-os-notifier" width="720"></p>
 
 [![NPM Version](https://img.shields.io/npm/v/esbuild-os-notifier)](https://www.npmjs.com/package/esbuild-os-notifier)
 [![NPM Downloads](https://img.shields.io/npm/dm/esbuild-os-notifier)](https://www.npmjs.com/package/esbuild-os-notifier)

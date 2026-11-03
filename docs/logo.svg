@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="esbuild-os-notifier">
+  <style>.ink{stroke:#1c1b1b}@media (prefers-color-scheme:dark){.ink{stroke:#fcf9f8}}</style>
+  <path class="ink" d="M146 28 L66 144 H124 L104 228 L190 108 H130 Z" fill="none" stroke-width="16"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="206" cy="50" r="10" fill="none" stroke="#ff3e3e" stroke-width="20"/>
+</svg>
