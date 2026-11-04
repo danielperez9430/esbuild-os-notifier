@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.0.0] - 2026-11-04
+
+### Changed
+- node-notifier 12. It is ES modules only and needs Node `^22.22.2 || ^24.15.0 || >=26.0.0`, now declared in `engines`. `require('esbuild-os-notifier')` keeps working on those versions through Node's `require(esm)`
+- On macOS, node-notifier 12 needs 10.14 or later and ignores `icon` (`contentImage` still works)
+- esbuild 0.28.2, and updated build tooling and GitHub Actions
+
+### Removed
+- The `uuid` override, since node-notifier no longer depends on it
+
+### Upgrade note
+- Node 20 and older are no longer supported. Stay on 1.1.4 if you need them.
+
 ## [1.1.4] - 2026-11-03
 
 ### Added

@@ -1,6 +1,6 @@
 {
   "name": "esbuild-os-notifier",
-  "version": "1.1.4",
+  "version": "2.0.0",
   "description": "Esbuild OS Notification Plugin",
   "main": "dist/index.js",
   "repository": {
@@ -10,6 +10,9 @@
   "author": "danielperez9430",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
   "exports": {
     "import": "./dist/index.js",
     "require": "./dist/index.cjs"
@@ -28,9 +31,6 @@
   "dependencies": {
     "esbuild": "^0.28.0",
     "node-notifier": "^12.0.0"
-  },
-  "overrides": {
-    "uuid": "^11.1.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.2",
